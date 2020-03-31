@@ -1,20 +1,15 @@
 import React from 'react';
-import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from '@material-ui/core';
+import { ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 interface Props {
-  id: number;
   name: string;
-  email: string;
-  phone: string;
-  purpose: string;
   crewName: string;
+  purpose: string;
   image: string;
-  datetime: string;
-  signature: string;
 }
 
-const VisitorEach: React.FC<Props> = ({ name, crewName, image }) => {
+const VisitorEach: React.FC<Props> = ({ name, crewName, purpose, image }) => {
   
   const classes = useStyles();
 
@@ -27,6 +22,7 @@ const VisitorEach: React.FC<Props> = ({ name, crewName, image }) => {
       primary={name}
       secondary={crewName}
     />
+    {purpose}
   </ListItem>
   );  
 };
@@ -44,4 +40,4 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default { VisitorEach };
+export default React.memo(VisitorEach);

@@ -2,17 +2,49 @@ import React from 'react';
 import { fade, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import { BaseState } from 'modules/base';
+
+interface Props {
+  base: BaseState,
+  onClickLogout?(): void,
+  onClickVisitorList?(): void,
+  onClickCrewList?(): void,  
+}
+
+export default function Header() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Button className={classes.margin} size="large" color="inherit"> 
+            NDA ADMINISTRATION
+          </Button>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search Name"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+          <Button color="inherit">LogOut</Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
-    grow: {
-      flexGrow: 1,
-    },
     root: {
       flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
     },
     title: {
       flexGrow: 1,
@@ -24,8 +56,8 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),
       },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
+      marginRight: theme.spacing(4),
+      marginLeft: theme.spacing(4),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
@@ -54,35 +86,8 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '20ch',
       },
     },
+    margin: {
+      margin: theme.spacing(1),
+    }
   }),
 );
-
-export default function ButtonAppBar() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            NDA admin
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search Name"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <Button color="inherit">LogOut</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};

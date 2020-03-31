@@ -18,9 +18,11 @@ export const requestMiddleware = (store: any) => (next: any) => (action: any) =>
   const { access, refresh } = storage;
   const accessToken: any = jwt.decode(access);
   const refreshToken: any = jwt.decode(refresh);
+
   if (refreshToken && Date.now() >= refreshToken.exp * 1000) {
     next(userLogout())
   }
+  
   if (accessToken && Date.now() >= accessToken.exp * 1000) {
     const getAccessToken = async () => {
       next(refreshRequest());

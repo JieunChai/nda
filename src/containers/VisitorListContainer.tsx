@@ -1,17 +1,22 @@
-import React from 'react';
-import VisitorEach from 'components/Visitors/VisitorEach';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../modules/index';
+import Header from 'components/Header/Header';
+import { VisitorList } from 'components/Visitors/VisitorList';
 
-
-interface Props {
-
-}
+interface Props {}
 
 const VisitorListContainer : React.FC<Props> = () => {
   
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
+  const visitor = useSelector((state: RootState) => state.visitor);
 
-  return
+  return(
+    <>
+      <Header />
+      <VisitorList visitor={visitor}  />
+    </>
+  );
 
 };
 

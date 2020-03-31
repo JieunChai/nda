@@ -48,8 +48,8 @@ export const getToken = (userId: string, pw: string) => async (dispatch: any) =>
 };
 
 export const logout = () => (dispatch: any) => {
-  dispatch(userLogout())
-  window.location.href = '/'
+  dispatch(userLogout());
+  window.location.href = '/';
 };
 
 // reducers
@@ -115,7 +115,12 @@ export const reducer = handleActions<BaseState, any>({
     };
     localStorage.setItem('user', JSON.stringify(user));
     return produce(state, draft => {
-      draft.user = null;
+      draft.user = { id, userId: userId };
     });
+  },
+  [Type.USER_FAILURE]: (state) => {
+    return produce(state, draft => {
+      draft.user = null;
+    })
   }
 }, initialState);
