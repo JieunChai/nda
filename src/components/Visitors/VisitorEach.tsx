@@ -12,7 +12,7 @@ interface Props {
 const VisitorEach: React.FC<Props> = ({ name, crewName, purpose, image }) => {
   
   const classes = useStyles();
-
+  console.log("visitoreach");
   return (
     <ListItem alignItems="flex-start">
     <ListItemAvatar>

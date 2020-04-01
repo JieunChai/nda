@@ -7,7 +7,7 @@ import { getVisitorAPI } from '../api/agent';
 // types
 
 export enum Type {
-  VISITOR_GET = 'VISITOR_GET',
+  VISITOR_GETALL = 'VISITOR_GETALL',
   VISITOR_CREATE = 'VISITOR_CREATE',
   VISITOR_REMOVE = 'VISITOR_REMOVE',
 };
@@ -22,7 +22,7 @@ export interface Visitor {
   image: string;
   datetime: string;
   signature: string;
-}
+};
 
 export interface VisitorState {
   visitors: Visitor[];
@@ -30,33 +30,34 @@ export interface VisitorState {
 
 // actions
 
-export const visitorGet = createAction(Type.VISITOR_GET);
+export const visitorGetAll = createAction(Type.VISITOR_GETALL);
 export const visitorCreate = createAction(Type.VISITOR_CREATE);
 export const visitorRemove = createAction(Type.VISITOR_REMOVE);
 
 // reducers
 
-export const getVisitors = (id: number) => async (dispatch: any) => {
-  dispatch(visitorGet());
+export const getAllVisitors = () => async (dispatch: any) => {
+  dispatch(visitorGetAll());
   const requestConfig = {
     headers: { ...authHeader() }
   }
   try {
     const res = await getVisitorAPI(requestConfig);
-    dispatch(visitorGet(res));
+    dispatch(visitorGetAll(res));
   }
   catch (err) {
     console.log(err.message);
   }
-}
+};
 
 const initialState: VisitorState = {
   visitors: [],
 };
 
 export const reducer = handleActions<VisitorState, any>({
-  [Type.VISITOR_GET]: (state, action) => {
+  [Type.VISITOR_GETALL]: (state, action) => {
     return produce(state, draft => {
+      draft.visitors.concat(action.payload);
     });
   },
   [Type.VISITOR_CREATE]: (state, action) => {
@@ -71,7 +72,7 @@ export const reducer = handleActions<VisitorState, any>({
         crewName: crewName, 
         image: image, 
         datetime: datetime, 
-        signature: signature 
+        signature: signature
       });
     });
   },

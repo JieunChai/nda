@@ -13,7 +13,7 @@ interface Props {
 
 export default function Header() {
   const classes = useStyles();
-
+  console.log("headercomponent");
   return (
     <div className={classes.root}>
       <AppBar position="static">

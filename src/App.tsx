@@ -11,10 +11,10 @@ const App: React.FC<Props> = (() => {
   return (
     <Switch>
       <Route exact path="/" component={LoginContainer} />
-      <ProtectedRoute exact path="/visitorlist" component={VisitorListContainer} />
-      {/* <ProtectedRoute exact path="/visitordetail/:id" component={VisitorDetailPage} />
-      <ProtectedRoute exact path="/crewlist" component={CrewContainer} />
-      <ProtectedRoute exact path="/crewdetail/:id" component={CrewDetailPage} /> */}
+      <Route exact path="/visitorlist" component={VisitorListContainer} />
+      {/* <ProtectedRoute exact path="/visitorlist/:id" component={VisitorCardContainer} />
+      <ProtectedRoute exact path="/crewlist" component={CrewListContainer} />
+      <ProtectedRoute exact path="/crewdlist/:id" component={CrewDetailContainer} /> */}
     </Switch>
   );
 });
