@@ -4,12 +4,12 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 interface Props {
   name: string;
-  crewName: string;
+  crewname: string;
   purpose: string;
   image: string;
 }
 
-const VisitorEach: React.FC<Props> = ({ name, crewName, purpose, image }) => {
+const VisitorEach: React.FC<Props> = ({ name, crewname, purpose, image }) => {
   
   const classes = useStyles();
   console.log("visitoreach");
@@ -20,7 +20,7 @@ const VisitorEach: React.FC<Props> = ({ name, crewName, purpose, image }) => {
     </ListItemAvatar>
     <ListItemText
       primary={name}
-      secondary={crewName}
+      secondary={crewname}
     />
     {purpose}
   </ListItem>

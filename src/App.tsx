@@ -6,12 +6,11 @@ import { ProtectedRoute } from 'containers/ProtectedRoute';
 
 interface Props {}
 
-const App: React.FC<Props> = (() => {
-  
+const App: React.FC<Props> = (() => {  
   return (
     <Switch>
       <Route exact path="/" component={LoginContainer} />
-      <Route exact path="/visitorlist" component={VisitorListContainer} />
+      <Route path="/visitorlist" component={VisitorListContainer} />
       {/* <ProtectedRoute exact path="/visitorlist/:id" component={VisitorCardContainer} />
       <ProtectedRoute exact path="/crewlist" component={CrewListContainer} />
       <ProtectedRoute exact path="/crewdlist/:id" component={CrewDetailContainer} /> */}

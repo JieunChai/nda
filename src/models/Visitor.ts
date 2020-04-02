@@ -4,7 +4,7 @@ export interface Visitor {
   email: string;
   phone: string;
   purpose: string;
-  crewName: string;
+  crewname: string;
   image: string;
   datetime: string;
   signature: string;

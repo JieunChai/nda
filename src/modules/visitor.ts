@@ -18,7 +18,7 @@ export interface Visitor {
   email: string;
   phone: string;
   purpose: string;
-  crewName: string;
+  crewname: string;
   image: string;
   datetime: string;
   signature: string;
@@ -51,7 +51,7 @@ export const getAllVisitors = () => async (dispatch: any) => {
 };
 
 const initialState: VisitorState = {
-  visitors: [],
+  visitors: []
 };
 
 export const reducer = handleActions<VisitorState, any>({
@@ -61,7 +61,7 @@ export const reducer = handleActions<VisitorState, any>({
     });
   },
   [Type.VISITOR_CREATE]: (state, action) => {
-    const { id, name, email, phone, purpose, crewName, image, datetime, signature } = action.payload;
+    const { id, name, email, phone, purpose, crewname, image, datetime, signature } = action.payload;
     return produce (state, draft => {
       draft.visitors.push({
         id: id, 
@@ -69,7 +69,7 @@ export const reducer = handleActions<VisitorState, any>({
         email: email, 
         phone: phone, 
         purpose: purpose, 
-        crewName: crewName, 
+        crewname: crewname, 
         image: image, 
         datetime: datetime, 
         signature: signature
@@ -84,3 +84,4 @@ export const reducer = handleActions<VisitorState, any>({
     });
     },
   }, initialState);
+  

@@ -37,10 +37,12 @@ export const userSuccess = createAction(Type.USER_SUCCESS);
 export const userFailure = createAction(Type.USER_FAILURE);
 
 export const getToken = (userId: string, pw: string) => async (dispatch: any) => {
-  dispatch(tokenRequest())
+  dispatch(tokenRequest());
+  console.log("토큰 요청");
   try {
     const res = await tokenAPI({ userId, pw });
     dispatch(tokenSuccess(res.data));
+    console.log(res.data, 'getToken');
   }
   catch (err) {
     dispatch(tokenFailure(err));
@@ -61,18 +63,20 @@ const initialState: BaseState = {
 
 export const reducer = handleActions<BaseState, any>({
   [Type.TOKEN_REQUEST]: (state) => {
+    console.log(state, "request");
     return produce (state, draft => {
       draft.isLoggedIn = false;
     });
   },
   [Type.TOKEN_SUCCESS]: (state, action) => {
-    localStorage.setItem('user', JSON.stringify(action.payload))
+    localStorage.setItem('user', JSON.stringify(action.payload));
+    console.log(state, "success");
     return produce (state, draft => {
       draft.isLoggedIn = true;
     });
   },
   [Type.TOKEN_FAILURE]: (state, action) => {
-    console.log(action);
+    console.log(action,"failure");
     return produce(state, draft => {
       draft.isLoggedIn = false;
     });

@@ -1,41 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LogIn from 'components/Login/LogIn';
-import useInputs from '../hooks/useInputs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getToken } from '../modules/base';
 import { RootState } from '../modules/index';
 import { history } from '../helpers/store';
 
-interface Props {
-  
-}
+interface Props {}
 
 const LoginContainer : React.FC<Props> = () => {
 
   const dispatch = useDispatch();
   const base = useSelector((state: RootState) => state.base);
+  console.log(base, "basestate");
+  const [state, setState] = useState({'userId': '', 'pw': ''});
 
   const { isLoggedIn } = base;
+  console.log(isLoggedIn, "여기는");
 
-  const [inputs, onChange] = useInputs({
-    userId: '',
-    pw: '',
-  });
+  const onValueChange = (e: any) => {
+    const { name, value } = e.target;
+    setState((prevState: any) => ({ ...prevState, [name]: value}));
+  };
 
   const onClickLogin = () => {
-    dispatch(getToken(inputs.userId, inputs.pw));
+    dispatch(getToken(state.userId, state.pw));
   };
 
   useEffect(() => {
     if(isLoggedIn) {
       history.push('/visitorlist');
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
+
+  console.log(isLoggedIn, "로그인여부확인");
 
   return <LogIn 
-    userId={inputs.userId}
-    pw={inputs.pw}
-    onChange={onChange}
+    onValueChange={onValueChange}
     onClickLogin={onClickLogin}
     />
 }

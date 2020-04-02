@@ -5,13 +5,11 @@ import { green } from '@material-ui/core/colors';
 import imgUrl from 'images/logomin.png';
 
 interface Props {
+  onValueChange(e: any): void;
   onClickLogin(): void;
-  onChange(e: any): void;
-  userId: string;
-  pw: string;
 }
 
-const LogIn: React.FC<Props> = ({ onChange, userId, pw, onClickLogin }) => {
+const LogIn: React.FC<Props> = ({ onValueChange, onClickLogin }) => {
 
   const classes = useStyles();
 
@@ -40,19 +38,19 @@ const LogIn: React.FC<Props> = ({ onChange, userId, pw, onClickLogin }) => {
             name="userId"
             autoComplete="username"
             autoFocus
-            onChange={onChange}
+            onChange={onValueChange}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
+            name="pw"
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={onChange}
+            onChange={onValueChange}
             onKeyDown={onKeyDown}
           />
           <Button

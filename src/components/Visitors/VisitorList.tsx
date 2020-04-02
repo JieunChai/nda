@@ -3,9 +3,7 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { Container, List } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 
-interface Props {
-  
-}
+interface Props {}
  
 const VisitorList : React.FC<Props> = (children) => {
   
