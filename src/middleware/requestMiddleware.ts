@@ -8,8 +8,7 @@ export const requestMiddleware = (store: any) => (next: any) => (action: any) =>
     return next(action);
   }
   if (
-    action.type.includes('TOKEN') ||
-    action.type.includes('REGISTER')
+    action.type.includes('TOKEN')
   ) {
     return next(action);
   }
@@ -20,7 +19,7 @@ export const requestMiddleware = (store: any) => (next: any) => (action: any) =>
   const refreshToken: any = jwt.decode(refresh);
 
   if (refreshToken && Date.now() >= refreshToken.exp * 1000) {
-    next(userLogout())
+    next(userLogout());
   }
   
   if (accessToken && Date.now() >= accessToken.exp * 1000) {
@@ -32,13 +31,13 @@ export const requestMiddleware = (store: any) => (next: any) => (action: any) =>
         }).catch(err => {
           next(refreshFailure(err));
         })
-      next(userRequest())
+      next(userRequest());
       await userAPI({ headers: { ...authHeader() } })
         .then(res => {
           next(userSuccess(res.data));
         }).catch(err => {
           next(userFailure(err));
-      })
+      });
     };
     getAccessToken();
   } else {

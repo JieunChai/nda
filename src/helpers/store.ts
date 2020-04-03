@@ -11,7 +11,7 @@ import { RootState } from 'modules';
 export const history = createBrowserHistory();
 
 export function configureStore(initialState?: RootState): Store<RootState> {
-  let middleware = applyMiddleware(logger, thunk, requestMiddleware);
+  let middleware = applyMiddleware(requestMiddleware, thunk, logger);
 
   if (process.env.NODE_ENV !== 'production') {
     middleware = composeWithDevTools(middleware);

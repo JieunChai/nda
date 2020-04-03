@@ -10,12 +10,8 @@ interface Props {}
 const LoginContainer : React.FC<Props> = () => {
 
   const dispatch = useDispatch();
-  const base = useSelector((state: RootState) => state.base);
-  console.log(base, "basestate");
+  const user = useSelector((state: RootState) => state.base.user);
   const [state, setState] = useState({'userId': '', 'pw': ''});
-
-  const { isLoggedIn } = base;
-  console.log(isLoggedIn, "여기는");
 
   const onValueChange = (e: any) => {
     const { name, value } = e.target;
@@ -27,12 +23,12 @@ const LoginContainer : React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    if(isLoggedIn) {
+    if(user) {
       history.push('/visitorlist');
     }
-  }, [isLoggedIn]);
+  }, [user]);
 
-  console.log(isLoggedIn, "로그인여부확인");
+  console.log(user, "로그인여부확인");
 
   return <LogIn 
     onValueChange={onValueChange}

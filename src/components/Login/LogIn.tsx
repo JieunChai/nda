@@ -17,7 +17,7 @@ const LogIn: React.FC<Props> = ({ onValueChange, onClickLogin }) => {
     if(e.key === 'Enter') {
       onClickLogin();
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
