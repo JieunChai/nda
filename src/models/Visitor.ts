@@ -9,3 +9,7 @@ export interface Visitor {
   datetime: string;
   signature: string;
 }
+
+export enum ActionStatus {
+  READY, PROGRESS, SUCCESS, FAIL
+}

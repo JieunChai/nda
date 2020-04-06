@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-// import { Visitor } from 'models/Visitor';
+import { Visitor } from 'models/Visitor';
 import produce from 'immer';
 import { authHeader } from 'helpers/authHeader';
 import { getVisitorAPI } from '../api/agent';
@@ -7,25 +7,20 @@ import { getVisitorAPI } from '../api/agent';
 // types
 
 export enum Type {
-  VISITOR_GETALL = 'VISITOR_GETALL',
-  VISITOR_CREATE = 'VISITOR_CREATE',
-  VISITOR_REMOVE = 'VISITOR_REMOVE',
-};
-
-export interface Visitor {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  purpose: string;
-  crewname: string;
-  image: string;
-  datetime: string;
-  signature: string;
+  SET_DEFAULT = 'SET_DEFAULT',
+  VISITOR_GETALL_REQUEST = 'VISITOR_GETALL_REQUEST',
+  VISITOR_GETALL_SUCCESS = 'VISITOR_GETALL_SUCCESS',
+  VISITOR_GETALL_FAILURE = 'VISITOR_GETALL_FAILURE',
+  VISITOR_CREATE_REQUEST = 'VISITOR_CREATE_REQUEST',
+  VISITOR_CREATE_SUCCESS = 'VISITOR_CREATE_SUCCESS',
+  VISITOR_CREATE_FAILURE = 'VISITOR_CREATE_FAILURE',
+  VISITOR_REMOVE_REQUEST = 'VISITOR_REMOVE_REQUEST',
+  VISITOR_REMOVE_SUCCESS = 'VISITOR_REMOVE_SUCCESS',
+  VISITOR_REMOVE_FAILURE = 'VISITOR_REMOVE_FAILURE',
 };
 
 export interface VisitorState {
-  visitors: Visitor[];
+  Visitors: Visitor[]
 };
 
 // actions
@@ -35,6 +30,10 @@ export const visitorCreate = createAction(Type.VISITOR_CREATE);
 export const visitorRemove = createAction(Type.VISITOR_REMOVE);
 
 // reducers
+
+const initialState: VisitorState = {
+  Visitors: []
+};
 
 export const getAllVisitors = () => async (dispatch: any) => {
   dispatch(visitorGetAll());
@@ -50,20 +49,20 @@ export const getAllVisitors = () => async (dispatch: any) => {
   }
 };
 
-const initialState: VisitorState = {
-  visitors: []
-};
-
 export const reducer = handleActions<VisitorState, any>({
+  [Type.SET_DEFAULT]: (state, action) => {
+    return initialState;
+  }
+
   [Type.VISITOR_GETALL]: (state, action) => {
     return produce(state, draft => {
-      draft.visitors.concat(action.payload);
+      draft.Visitors.concat(action.payload);
     });
   },
   [Type.VISITOR_CREATE]: (state, action) => {
     const { id, name, email, phone, purpose, crewname, image, datetime, signature } = action.payload;
     return produce (state, draft => {
-      draft.visitors.push({
+      draft.Visitors.push({
         id: id, 
         name: name, 
         email: email, 
