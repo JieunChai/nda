@@ -1,86 +1,35 @@
-import { createAction, handleActions } from 'redux-actions';
-import { Visitor } from 'models/Visitor';
-import produce from 'immer';
-import { authHeader } from 'helpers/authHeader';
-import { getVisitorAPI } from '../api/agent';
+import { createAction } from 'redux-actions';
 
-// types
+export namespace VisitorActions {
+  export enum Type {
+    GET_VISITOR = 'GET_VISITOR',
+    GET_VISITOR_S = 'GET_VISITOR_S',
+    GET_VISITOR_F = 'GET_VISITOR_F',
 
-export enum Type {
-  SET_DEFAULT = 'SET_DEFAULT',
-  VISITOR_GETALL_REQUEST = 'VISITOR_GETALL_REQUEST',
-  VISITOR_GETALL_SUCCESS = 'VISITOR_GETALL_SUCCESS',
-  VISITOR_GETALL_FAILURE = 'VISITOR_GETALL_FAILURE',
-  VISITOR_CREATE_REQUEST = 'VISITOR_CREATE_REQUEST',
-  VISITOR_CREATE_SUCCESS = 'VISITOR_CREATE_SUCCESS',
-  VISITOR_CREATE_FAILURE = 'VISITOR_CREATE_FAILURE',
-  VISITOR_REMOVE_REQUEST = 'VISITOR_REMOVE_REQUEST',
-  VISITOR_REMOVE_SUCCESS = 'VISITOR_REMOVE_SUCCESS',
-  VISITOR_REMOVE_FAILURE = 'VISITOR_REMOVE_FAILURE',
+    CREATE_VISITOR = 'CREATE_VISITOR',
+    CREATE_VISITOR_S = 'CREATE_VISITOR_S',
+    CREATE_VISITOR_F = 'CREATE_VISITOR_F',
+
+    UPDATE_VISITOR = 'UPDATE_VISITOR',
+    UPDATE_VISITOR_S = 'UPDATE_VISITOR_S',
+    UPDATE_VISITOR_F = 'UPDATE_VISITOR_F',
+
+    REMOVE_VISITOR = 'REMOVE_VISITOR',
+    REMOVE_VISITOR_S = 'REMOVE_VISITOR_S',
+    REMOVE_VISITOR_F = 'REMOVE_VISITOR_F',
+  };
+
+  export const getVisitor = createAction(Type.GET_VISITOR);
+  export const getVisitorS = createAction(Type.GET_VISITOR_S);
+  export const getVisitorF = createAction(Type.GET_VISITOR_F);
+
+  export const createVisitor = createAction(Type.CREATE_VISITOR);
+  export const createVisitorS = createAction(Type.CREATE_VISITOR_S);
+  export const createVisitorF = createAction(Type.CREATE_VISITOR_F);
+
+  export const updateVisitor = createAction(Type.UPDATE_VISITOR);
+  export const updateVisitorS = createAction(Type.UPDATE_VISITOR_S);
+  export const updateVisitorF = createAction(Type.UPDATE_VISITOR_F);
 };
 
-export interface VisitorState {
-  Visitors: Visitor[]
-};
-
-// actions
-
-export const visitorGetAll = createAction(Type.VISITOR_GETALL);
-export const visitorCreate = createAction(Type.VISITOR_CREATE);
-export const visitorRemove = createAction(Type.VISITOR_REMOVE);
-
-// reducers
-
-const initialState: VisitorState = {
-  Visitors: []
-};
-
-export const getAllVisitors = () => async (dispatch: any) => {
-  dispatch(visitorGetAll());
-  const requestConfig = {
-    headers: { ...authHeader() }
-  }
-  try {
-    const res = await getVisitorAPI(requestConfig);
-    dispatch(visitorGetAll(res));
-  }
-  catch (err) {
-    console.log(err.message);
-  }
-};
-
-export const reducer = handleActions<VisitorState, any>({
-  [Type.SET_DEFAULT]: (state, action) => {
-    return initialState;
-  }
-
-  [Type.VISITOR_GETALL]: (state, action) => {
-    return produce(state, draft => {
-      draft.Visitors.concat(action.payload);
-    });
-  },
-  [Type.VISITOR_CREATE]: (state, action) => {
-    const { id, name, email, phone, purpose, crewname, image, datetime, signature } = action.payload;
-    return produce (state, draft => {
-      draft.Visitors.push({
-        id: id, 
-        name: name, 
-        email: email, 
-        phone: phone, 
-        purpose: purpose, 
-        crewname: crewname, 
-        image: image, 
-        datetime: datetime, 
-        signature: signature
-      });
-    });
-  },
-  [Type.VISITOR_REMOVE]: (state, action) => {
-    const { id } = action.payload;
-    return produce (state, draft => {
-      const remove = draft.visitors.findIndex(visitor => visitor.id === id);
-      draft.visitors.splice(remove, 1);      
-    });
-    },
-  }, initialState);
-  
+export type VisitorActions = Omit<typeof VisitorActions, 'Type'>;

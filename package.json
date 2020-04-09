@@ -63,7 +63,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6"
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "This project was bootstrapped with CRA",
   "main": "index.js",
   "author": "",
   "license": "ISC"

@@ -1,5 +1,4 @@
 import { User } from 'models/User'
-import { tokenAPI } from 'api/agent';
 import produce from 'immer';
 import { handleActions, Action } from 'redux-actions';
 import { BaseActions } from '../actions/base';
@@ -9,30 +8,39 @@ export interface BaseState {
   user: User | null,
   task: {
     getJWT: ActionStatus,
+    getRefresh: ActionStatus,
+    createUser: ActionStatus,
+    getUser: ActionStatus
   },
   errorMessage: string,
 };
+
+export type BaseTask = 'getUser' | 'createUser' | 'getJWT';
 
 const initialState: BaseState = {
   user: null,
   task: {
     getJWT: ActionStatus.READY,
+    getRefresh: ActionStatus.READY,
+    createUser: ActionStatus.READY,
+    getUser: ActionStatus.READY,
   },
   errorMessage: "",
 };
 
-export const basereducer = handleActions<BaseState, any>({
-  [BaseActions.Type.TOKEN_REQUEST]: (state, action: Action<{userId: string, pw: string}>) => {
+
+export const baseReducer = handleActions<BaseState, any>({
+  [BaseActions.Type.GET_TOKEN]: (state, action: Action<{userId: string, pw: string}>) => {
     return produce (state, draft => {
       draft.task.getJWT = ActionStatus.PROGRESS;
     });
   },
-  [BaseActions.Type.TOKEN_SUCCESS]: (state, action: Action<{}>) => {
+  [BaseActions.Type.GET_TOKEN_S]: (state, action: Action<{}>) => {
     return produce (state, draft => {
       draft.task.getJWT = ActionStatus.SUCCESS;
     });
   },
-  [BaseActions.Type.TOKEN_FAILURE]: (state, action: Action<string>) => {
+  [BaseActions.Type.GET_TOKEN_F]: (state, action: Action<string>) => {
     if(typeof action.payload === 'string') {
       const errMsg = action.payload;
       return produce(state, draft => {
@@ -42,7 +50,7 @@ export const basereducer = handleActions<BaseState, any>({
     };
     return state;
   },
-  [BaseActions.Type.REFRESH_SUCCESS]: (state, action) => {
+  [BaseActions.Type.GET_REFRESH_S]: (state, action) => {
     const { access } = action.payload;
     let user = JSON.parse(localStorage.getItem('user') || '{}');
     user = {
@@ -50,10 +58,10 @@ export const basereducer = handleActions<BaseState, any>({
       access
     };
     localStorage.setItem('user', JSON.stringify(user));
-    return produce(state, draft => {     
+    return produce(state, draft => {
     });
   },
-  [BaseActions.Type.REFRESH_FAILURE]: (state) => {
+  [BaseActions.Type.GET_REFRESH_F]: (state) => {
     localStorage.clear();
     return produce(state, draft => {
       draft = { ...initialState }
@@ -62,15 +70,15 @@ export const basereducer = handleActions<BaseState, any>({
   [BaseActions.Type.LOGOUT]: (state) => {
     localStorage.clear();
     return produce(state, draft => {
-      draft = { ...initialState}
+      draft = initialState;
     });
   },
-  [BaseActions.Type.USER_REQUEST]: (state) => {
+  [BaseActions.Type.GET_USER]: (state) => {
     return produce(state, draft => {
       draft.user = null;
     });
   },
-  [BaseActions.Type.USER_SUCCESS]: (state, action) => {
+  [BaseActions.Type.GET_USER_S]: (state, action) => {
     const { id, userId } = action.payload;
     let user = JSON.parse(localStorage.getItem('user') || '{}');
     user = {
@@ -83,9 +91,32 @@ export const basereducer = handleActions<BaseState, any>({
       draft.user = { id, userId: userId, role };
     });
   },
-  [BaseActions.Type.USER_FAILURE]: (state) => {
+  [BaseActions.Type.GET_USER_F]: (state) => {
     return produce(state, draft => {
       draft.user = null;
     })
+  },
+  [BaseActions.Type.CREATE_USER]: (state, action: Action<{userId: string, pw: string}>) => {
+    if(action.payload){
+      return produce(state, draft => {
+        draft.task.createUser = ActionStatus.PROGRESS;
+      })
+    }
+    return state;
+  },
+  [BaseActions.Type.CREATE_USER_S]: (state) => {
+    return produce(state, draft => {
+      draft.task.createUser = ActionStatus.SUCCESS;
+    });
+  },
+  [BaseActions.Type.CREATE_USER_F]: (state, action: Action<string>) => {
+    if(action.payload){
+      const errMsg = action.payload;
+      return produce(state, draft => {
+        draft.errorMessage = errMsg;
+        draft.task.createUser = ActionStatus.FAIL;
+      })
+    }
+    return state;
   }
 }, initialState);

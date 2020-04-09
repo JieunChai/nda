@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
-import { history, configureStore } from './helpers/store';
 
 const store = configureStore();
 

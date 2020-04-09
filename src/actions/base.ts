@@ -2,28 +2,38 @@ import { createAction } from 'redux-actions';
 
 export namespace BaseActions {
   export enum Type {
-  TOKEN_REQUEST = 'TOKEN_REQUEST',
-  TOKEN_SUCCESS = 'TOKEN_SUCCCESS',
-  TOKEN_FAILURE = 'TOKEN_FAILURE',
-  REFRESH_REQUEST = 'REFRESH_REQUEST',
-  REFRESH_SUCCESS = 'REFRESH_SUCCCESS',
-  REFRESH_FAILURE = 'REFRESH_FAILURE',
+  GET_TOKEN = 'GET_TOKEN',
+  GET_TOKEN_S = 'GET_TOKEN_S',
+  GET_TOKEN_F = 'GET_TOKEN_F',
+  
+  GET_REFRESH = 'GET_REFRESH',
+  GET_REFRESH_S = 'GET_REFRESH_S',  
+  GET_REFRESH_F = 'GET_REFRESH_F',
+  
   LOGOUT = 'LOGOUT',
-  USER_REQUEST = 'USER_REQUEST',
-  USER_SUCCESS = 'USER_SUCCCESS',
-  USER_FAILURE = 'USER_FAILURE',
-};
+  
+  GET_USER = 'GET_USER',
+  GET_USER_S = 'GET_USER_S',
+  GET_USER_F = 'GET_USER_F',
 
-export const tokenRequest = createAction(Type.TOKEN_REQUEST);
-export const tokenSuccess = createAction(Type.TOKEN_SUCCESS);
-export const tokenFailure = createAction(Type.TOKEN_FAILURE);
-export const refreshRequest = createAction(Type.REFRESH_REQUEST);
-export const refreshSuccess = createAction(Type.REFRESH_SUCCESS);
-export const refreshFailure = createAction(Type.REFRESH_FAILURE);
-export const userLogout = createAction(Type.LOGOUT);
-export const userRequest = createAction(Type.USER_REQUEST);
-export const userSuccess = createAction(Type.USER_SUCCESS);
-export const userFailure = createAction(Type.USER_FAILURE);
+  CREATE_USER = 'CREATE_USER',
+  CREATE_USER_S = 'CREATE_USER_S',
+  CREATE_USER_F = 'CREATE_USER_F',
+  };
+
+  export const getToken = createAction<{ userId: string, pw:string }>(Type.GET_TOKEN);
+  export const getTokenS = createAction(Type.GET_TOKEN_S);
+  export const getTokenF = createAction(Type.GET_TOKEN_F);
+  export const getRefresh = createAction(Type.GET_REFRESH);
+  export const getRefreshS = createAction(Type.GET_REFRESH_S);
+  export const getRefreshF = createAction(Type.GET_REFRESH_F);
+  export const userLogout = createAction(Type.LOGOUT);
+  export const getUser = createAction(Type.GET_USER);
+  export const getUserS = createAction(Type.GET_USER_S);
+  export const getUserF = createAction(Type.GET_USER_F);
+  export const createUser = createAction(Type.CREATE_USER);
+  export const createUserS = createAction(Type.CREATE_USER_S);
+  export const createUserF = createAction(Type.CREATE_USER_F);
 };
 
 export type BaseActions = Omit<typeof BaseActions, 'Type'>;
