@@ -5,7 +5,7 @@ const baseURL = './api/visitors';
 
 export namespace VisitorAPI{
 
-  export const visitorGet = () => {
+  export const getVisitors = () => {
     const endPoint = path.join(baseURL, '/');
     return axiosClient.get(endPoint, {
       headers: {
@@ -14,7 +14,7 @@ export namespace VisitorAPI{
     });
   };
 
-  export const visitorCreate = (body: {
+  export const createVisitor = (body: {
     id: number,
     name: string,
     email: string, 

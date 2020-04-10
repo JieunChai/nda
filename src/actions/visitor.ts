@@ -30,6 +30,10 @@ export namespace VisitorActions {
   export const updateVisitor = createAction(Type.UPDATE_VISITOR);
   export const updateVisitorS = createAction(Type.UPDATE_VISITOR_S);
   export const updateVisitorF = createAction(Type.UPDATE_VISITOR_F);
+
+  export const removeVisitor = createAction(Type.REMOVE_VISITOR);
+  export const removeVistiorS = createAction(Type.REMOVE_VISITOR_S);
+  export const removeVitisorF = createAction(Type.REMOVE_VISITOR_F);
 };
 
 export type VisitorActions = Omit<typeof VisitorActions, 'Type'>;

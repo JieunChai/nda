@@ -1,5 +1,6 @@
 import { axiosClient } from './client';
 import * as path from 'path';
+import { User } from 'models/User';
 
 const baseURL = '/api/users/auth';
 
@@ -19,4 +20,5 @@ export namespace TokenAPI{
     const endPoint = path.join(baseURL, '/');
     return axiosClient.post<{}>(endPoint, body);
   };
+
 };

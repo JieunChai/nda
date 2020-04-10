@@ -10,12 +10,12 @@ export interface BaseState {
     getJWT: ActionStatus,
     getRefresh: ActionStatus,
     createUser: ActionStatus,
-    getUser: ActionStatus
+    fetchUser: ActionStatus
   },
   errorMessage: string,
 };
 
-export type BaseTask = 'getUser' | 'createUser' | 'getJWT';
+export type BaseTask = 'getJWT' | 'createUser' | 'getRefresh' | 'fetchUser';
 
 const initialState: BaseState = {
   user: null,
@@ -23,7 +23,7 @@ const initialState: BaseState = {
     getJWT: ActionStatus.READY,
     getRefresh: ActionStatus.READY,
     createUser: ActionStatus.READY,
-    getUser: ActionStatus.READY,
+    fetchUser: ActionStatus.READY,
   },
   errorMessage: "",
 };
@@ -50,6 +50,11 @@ export const baseReducer = handleActions<BaseState, any>({
     };
     return state;
   },
+  [BaseActions.Type.GET_REFRESH]: (state, action) => {
+    return produce(state, draft => {
+      draft.task.getRefresh = ActionStatus.PROGRESS;
+    })
+  },
   [BaseActions.Type.GET_REFRESH_S]: (state, action) => {
     const { access } = action.payload;
     let user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -59,12 +64,13 @@ export const baseReducer = handleActions<BaseState, any>({
     };
     localStorage.setItem('user', JSON.stringify(user));
     return produce(state, draft => {
+      draft.task.getRefresh = ActionStatus.SUCCESS;
     });
   },
   [BaseActions.Type.GET_REFRESH_F]: (state) => {
     localStorage.clear();
     return produce(state, draft => {
-      draft = { ...initialState }
+      draft.task.getRefresh = ActionStatus.FAIL;
     });
   },
   [BaseActions.Type.LOGOUT]: (state) => {
@@ -73,28 +79,33 @@ export const baseReducer = handleActions<BaseState, any>({
       draft = initialState;
     });
   },
-  [BaseActions.Type.GET_USER]: (state) => {
-    return produce(state, draft => {
-      draft.user = null;
-    });
+  [BaseActions.Type.SET_USER]: (state, action) => {
+    if(action.payload){
+      return produce(state, draft => {
+        draft.task.fetchUser = ActionStatus.PROGRESS;
+      });
+    }
+    return state;
   },
-  [BaseActions.Type.GET_USER_S]: (state, action) => {
-    const { id, userId } = action.payload;
-    let user = JSON.parse(localStorage.getItem('user') || '{}');
-    user = {
-      ...user,
-      id,
-      userId: userId,
-    };
-    localStorage.setItem('user', JSON.stringify(user));
-    return produce(state, draft => {
-      draft.user = { id, userId: userId, role };
-    });
+  [BaseActions.Type.SET_USER_S]: (state, action: Action<User>) => {
+    if(action.payload){
+      const user = action.payload;
+      return produce(state, draft => {
+        draft.user = user;
+        draft.task.fetchUser = ActionStatus.SUCCESS;
+      });
+    }
+    return state;
   },
-  [BaseActions.Type.GET_USER_F]: (state) => {
-    return produce(state, draft => {
-      draft.user = null;
-    })
+  [BaseActions.Type.SET_USER_F]: (state, action: Action<string>) => {
+    if(action.payload){
+      const errMsg = action.payload;
+      return produce(state, draft => {
+        draft.errorMessage = errMsg;
+        draft.task.createUser = ActionStatus.FAIL;
+      })
+    }
+    return state;
   },
   [BaseActions.Type.CREATE_USER]: (state, action: Action<{userId: string, pw: string}>) => {
     if(action.payload){
@@ -104,12 +115,12 @@ export const baseReducer = handleActions<BaseState, any>({
     }
     return state;
   },
-  [BaseActions.Type.CREATE_USER_S]: (state) => {
+  [BaseActions.Type.CREATE_USER_S]: (state, action) => {
     return produce(state, draft => {
       draft.task.createUser = ActionStatus.SUCCESS;
-    });
+    })
   },
-  [BaseActions.Type.CREATE_USER_F]: (state, action: Action<string>) => {
+  [BaseActions.Type.CREATE_USER_F]: (state, action) => {
     if(action.payload){
       const errMsg = action.payload;
       return produce(state, draft => {

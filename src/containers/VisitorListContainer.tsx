@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
- import { RootState } from '../modules/index';
 import Header from 'components/Header/Header';
 import VisitorEach from 'components/Visitors/VisitorEach';
 import { VisitorList } from 'components/Visitors/VisitorList';
-import { getAllVisitors } from '../modules/visitor';
+import { RootState } from 'actions';
+import { fetchVisitors } from 'sagas/visitor';
 
 interface Props {}
 
@@ -14,7 +14,7 @@ const VisitorListContainer : React.FC<Props> = () => {
   const visitor = useSelector((state: RootState) => state.visitor);
 
   useEffect(() => {
-    dispatch(getAllVisitors());
+    dispatch(fetchVisitors());
   }, [visitor]);
 
   const visitorsInfo = visitor.visitors;
@@ -26,7 +26,7 @@ const VisitorListContainer : React.FC<Props> = () => {
     
   // }
 
-  const visitorList = (visitorsInfo && visitorsInfo.map(each => each ? (
+  const visitorList = (visitorsInfo && visitorsInfo.map((each: { id: string | number | undefined; name: string; crewname: string; purpose: string; image: string; }) => each ? (
     <VisitorEach
       key={each.id}
       name={each.name}
