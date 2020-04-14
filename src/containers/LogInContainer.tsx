@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import LogIn from 'components/Login/LogIn';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'actions';
 import { BaseActions } from 'actions/base';
-import history from 'history';
+import { RootState } from 'reducers';
+import { history } from '../index';
 
-interface Props {}
+
+interface Props {
+  history: History
+}
 
 const LoginContainer : React.FC<Props> = () => {
 
@@ -23,11 +26,11 @@ const LoginContainer : React.FC<Props> = () => {
     dispatch(BaseActions.setUser());
   };
 
-  // useEffect(() => {
-  //   if(user) {
-  //     history.push('/visitorlist') 
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if(user) {
+      history.push('/visitorlist') 
+    }
+  }, [user]);
 
   console.log(user, "로그인여부확인");
 

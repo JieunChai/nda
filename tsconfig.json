@@ -1,35 +1,35 @@
 {
   "compilerOptions": {
+    // Target latest version of ECMAScript.
     "target": "es5",
-    "noEmit": true,
     "jsx": "react",
-    "lib": [
-      "dom",
-      "es6"
-    ],
+    "lib": ["es6", "es7", "dom"],
+    // Enable strictest settings like strictNullChecks & noImplicitAny.
     "strict": true,
-    "allowJs": true,
     "sourceMap": true,
     "module": "esnext",
+    "experimentalDecorators": true,
+    "declaration": false,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    // Search under node_modules for non-relative imports.
+    "moduleResolution": "node",
+    "removeComments": true,
+    "outDir": "build",
+    "baseUrl": "src",
+    // Process & infer types from .js files.
+    "allowJs": true,
     "skipLibCheck": true,
+    // Import non-ES modules as default imports.
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
     "resolveJsonModule": true,
+    // Disallow features that require cross-file information for emit.
     "isolatedModules": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "baseUrl": "src"
+    // Don't emit; allow Babel to transform files.
+    "noEmit": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "__tests__"
-  ]
+  "exclude": ["node_modules", "build"],
+  "include": ["src"]
 }
