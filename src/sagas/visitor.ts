@@ -14,7 +14,7 @@ export function* fetchVisitors(action: Action<null>) {
   yield put(VisitorActions.getVisitorF(err));
 };
 
-export function* updateVisitors(action: Action<id:number, name:string, email: string, phone: string, purpose: string, crewname: string, image: string, datetime: string, signature>)
+export function* updateVisitors(action: Action<id: number, name: string, email: string, phone: string, purpose: string, crewname: string, image: string, datetime: string, signature: string>)
 
 export default function* root() {
   yield all([
