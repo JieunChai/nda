@@ -1,14 +1,15 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Container, List, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core';
+import { Container, List } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import { Visitor } from 'models/Visitor';
+import VisitorItem from './VisitorItem';
 
 interface Props {
   visitorsInfo: Visitor[]
 }
 
-const VisitorList : React.FC<Props> = ({visitorsInfo}) => {
+const VisitorList: React.FC<Props> = ({visitorsInfo}) => {
   
   const classes = useStyles();
 
@@ -19,17 +20,7 @@ const VisitorList : React.FC<Props> = ({visitorsInfo}) => {
   return (
     <Container className={classes.root}>
       <List className={classes.list}>
-      {visitorsInfo && visitorsInfo.map((each: { id: string | number | undefined; name: string; crewname: string; purpose: string; image: string; }) => each ? (
-        <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="visitor" src={each.image} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={each.name}
-          secondary={each.crewname}
-        />
-        {each.purpose}
-      </ListItem>): null}
+      {visitorsInfo && visitorsInfo.map(each => each ? (<VisitorItem each={each} key={each.id}/>): null)}
       </List>
     </Container>
   );

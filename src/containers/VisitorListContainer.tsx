@@ -16,7 +16,7 @@ const VisitorListContainer : React.FC<Props> = () => {
     dispatch(VisitorActions.getVisitor());
   }, [visitors]);
 
-  const visitorsInfo = visitors;
+  const visitorsInfo = visitors.Visitors;
   console.log(visitorsInfo);
 
   // const onClickToCard = (id: number) => dispatch();

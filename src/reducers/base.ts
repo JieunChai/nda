@@ -3,7 +3,6 @@ import produce from 'immer';
 import { handleActions, Action } from 'redux-actions';
 import { BaseType } from '../actions/base';
 import { ActionStatus } from '../models/Visitor';
-// import { actionChannel } from 'redux-saga/effects';
 
 export interface BaseState {
   user: User | null,

@@ -8,6 +8,7 @@ import { Visitor } from 'models/Visitor';
 export function* getVisitor(action: Action<null>) {
   try{
     const res: AxiosResponse<{visitors: Visitor[]}> = yield call (API.getVisitors);
+    console.log(res);
     yield put(VisitorActions.getVisitorS(res.data));
   }catch(err){
   yield put(VisitorActions.getVisitorF(err));

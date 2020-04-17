@@ -38,7 +38,7 @@ export const visitorReducer = handleActions<VisitorState, any>({
     const visitors = action.payload;
     return produce(state, draft => {
       draft.task.getVisitor = ActionStatus.SUCCESS;
-      draft.Visitors.push(visitors);
+      draft.Visitors.concat(visitors);
     });
   },
   [VisitorType.GET_VISITOR_F]: (state, action) => {
@@ -55,7 +55,7 @@ export const visitorReducer = handleActions<VisitorState, any>({
     const { id, name, email, phone, purpose, crewname, image, datetime, signature } = action.payload;
     return produce (state, draft => {
       draft.task.createVisitor = ActionStatus.SUCCESS;
-      draft.Visitors.push({
+      draft.Visitors.concat({
         id: id, 
         name: name, 
         email: email, 
