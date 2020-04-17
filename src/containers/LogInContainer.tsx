@@ -3,13 +3,13 @@ import LogIn from 'components/Login/LogIn';
 import { useDispatch, useSelector } from 'react-redux';
 import { BaseActions } from 'actions/base';
 import { RootState } from 'reducers';
-import { history } from 'index';
+import { History } from 'history';
 
 interface Props {
   history: History
 }
 
-const LoginContainer : React.FC<Props> = ({history}) => {
+const LoginContainer: React.FC<Props> = ({ history }) => {
 
   const dispatch = useDispatch();
   
@@ -38,6 +38,7 @@ const LoginContainer : React.FC<Props> = ({history}) => {
     onValueChange={onValueChange}
     onClickLogin={onClickLogin}
     />
-}
+  };
+};
 
-export { LoginContainer };
+export default LoginContainer;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
-import { LoginContainer } from 'containers/LogInContainer';
+import LoginContainer from 'containers/LogInContainer';
 import { VisitorListContainer } from 'containers/VisitorListContainer';
 import { RootState } from 'reducers';
 import { History } from 'history';
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const App: React.FC<Props> = (({history}) => {  
+
   const user = useSelector ( (state: RootState) => state.base.user);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const App: React.FC<Props> = (({history}) => {
   return (
     <Switch>
       <Route exact path="/" component={LoginContainer} />
-      <Route path="/visitorlist" component={VisitorListContainer} />
+      <Route exact path="/visitorlist" component={VisitorListContainer} />
       {/* <Route exact path="/visitorlist/:id" component={VisitorCardContainer} />
       <Route exact path="/crewlist" component={CrewListContainer} />
       <Route exact path="/crewdlist/:id" component={CrewDetailContainer} /> */}
