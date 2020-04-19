@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 import { configureStore } from 'store';
 import { createBrowserHistory } from 'history';
 
+export const history = createBrowserHistory();
 const store = configureStore();
-const history = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route component={App} />
+      <Route path='/' component={App} />
     </Router>
   </Provider>,
   document.getElementById('root')

@@ -1,10 +1,12 @@
+/* eslint-disable */
 import { axiosClient } from './client';
 import * as path from 'path';
 import { User } from 'models/User';
 
 const baseURL = '/api/users';
 
-export namespace AccountAPI{
+/** */
+// export namespace BaseAPI{
 
   export const accountGet  = () => { 
     const endPoint = path.join(baseURL, '/');
@@ -25,6 +27,6 @@ export namespace AccountAPI{
         Authorization: `Bearer ${window.localStorage.getItem('access')}`
       }
     });
-  };
-    
-};
+  };    
+// };
+

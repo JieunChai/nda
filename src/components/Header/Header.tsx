@@ -1,15 +1,15 @@
 import React from 'react';
 import { fade, createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, InputBase } from '@material-ui/core';
+import { AppBar, Toolbar, Button, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { BaseState } from 'modules/base';
+//import { BaseState } from '../../reducers/base';
 
-interface Props {
-  base: BaseState,
-  onClickLogout?(): void,
-  onClickVisitorList?(): void,
-  onClickCrewList?(): void,  
-}
+// interface Props {
+//   base: BaseState,
+//   onClickLogout?(): void,
+//   onClickVisitorList?(): void,
+//   onClickCrewList?(): void,  
+// }
 
 export default function Header() {
   const classes = useStyles();

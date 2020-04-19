@@ -1,10 +1,9 @@
 import { axiosClient } from './client';
 import * as path from 'path';
-import { User } from 'models/User';
 
 const baseURL = '/api/users/auth';
 
-export namespace TokenAPI{
+// export namespace TokenAPI{
 
   export const tokenGet = (body: { userId: string, pw: string }) => {
     const endPoint = path.join(baseURL, '/');
@@ -21,4 +20,4 @@ export namespace TokenAPI{
     return axiosClient.post<{}>(endPoint, body);
   };
 
-};
+// };

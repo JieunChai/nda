@@ -1,24 +1,55 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { Action } from 'redux-actions';
 import { AxiosResponse } from 'axios';
-import { VisitorActions } from 'actions/visitor';
-import { VisitorAPI } from 'APIs';
+import { VisitorType, VisitorActions } from 'actions/visitor';
+import * as API from 'APIs';
 import { Visitor } from 'models/Visitor';
-import { BaseActions } from 'actions/base';
 
-export function* fetchVisitors(action: Action<null>) {
+export function* getVisitor(action: Action<null>) {
   try{
-    const response: AxiosResponse<{visitors: Visitor[]}> = yield call (VisitorAPI.getVisitors);
-    yield put(VisitorActions.getVisitorS(response.data));
+    const res: AxiosResponse<{visitors: Visitor[]}> = yield call (API.getVisitors);
+    console.log(res);
+    yield put(VisitorActions.getVisitorS(res.data));
   }catch(err){
   yield put(VisitorActions.getVisitorF(err));
+  };
 };
 
+<<<<<<< HEAD
 export function* updateVisitors(action: Action<id: number, name: string, email: string, phone: string, purpose: string, crewname: string, image: string, datetime: string, signature: string>)
+=======
+// export function* updateVisitors(action: Action<{id: number, name: string, email: string, phone: string, purpose: string, crewname: string, image: string, datetime: string, signature: string}>){
+//   try{
+//     const res: AxiosResponse<> = yield call (VisitorAPI.updateVisitor);
+//     yield put(VisitorActions.updateVisitorS(res.data));
+//   }catch(err){
+//     yield put(VisitorActions.updateVisitorF(err));
+//   }
+// };
+
+// export function* createVisitors(action: Action<{id: number, name: string, email: string, phone: string, purpose: string, crewname: string, image: string, datetime: string, signature: string}>){
+//   try{
+//     const res: AxiosResponse<{}> = yield call (VisitorAPI.createVisitor);
+
+//   }catch(err){
+//     yield put(VisitorActions.createVisitorF(err));
+//   }
+// }
+
+// export function* removeVisitor(action: Action<{id: number}>){
+//   try{
+//     const res: AxiosResponse<> = yield call (VisitorAPI.removeVisitor);
+//   }catch(err){
+//     yield put(VisitorActions.removeVisitorF(err));
+//   }
+// }
+>>>>>>> c595969bbea4d7b23f003327c31ae0e81179b345
 
 export default function* root() {
   yield all([
-    takeLatest ( BaseActions.Type.GET_VISITOR, fetchVisitors),
-    takeLatest ( BaseActions.Type.)
+    takeLatest ( VisitorType.GET_VISITOR, getVisitor),
+    // takeLatest ( VisitorActions.Type.UPDATE_VISITOR, updateVisitors),
+    // takeLatest ( VisitorActions.Type.CREATE_VISITOR, createVisitors),
+    // takeLatest ( VisitorActions.Type.REMOVE_VISITOR, removeVisitors),
   ]);
 };

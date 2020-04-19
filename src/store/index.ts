@@ -4,7 +4,7 @@ import { sagaMiddleware } from '../middleware/saga';
 import thunk from 'redux-thunk';
 import { RootState, rootReducer } from 'reducers';
 import logger from 'redux-logger';
-import rootSaga from 'app/sagas';
+import rootSaga from 'sagas';
 
 export function configureStore(initialState?: RootState): Store<RootState> {
   let middleware = applyMiddleware(logger, thunk, sagaMiddleware);
@@ -16,5 +16,7 @@ export function configureStore(initialState?: RootState): Store<RootState> {
   const store = createStore(rootReducer as any, initialState as any, middleware) as Store<RootState>;
 
   sagaMiddleware.run(rootSaga);
+
+  return store;
   
 }
