@@ -18,7 +18,7 @@
     "@types/redux-actions": "^2.6.1",
     "@types/redux-logger": "^3.0.7",
     "axios": "^0.19.2",
-    "immer": "^6.0.2",
+    "immer": "^8.0.1",
     "jsonwebtoken": "^8.5.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
